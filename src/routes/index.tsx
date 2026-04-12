@@ -45,6 +45,12 @@ function Index() {
                 Schedule
               </Button>
             </Link>
+            <Link to="/history">
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <BarChart3 className="h-3.5 w-3.5" />
+                History
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="sm"

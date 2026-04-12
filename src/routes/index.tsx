@@ -5,6 +5,7 @@ import { SubjectsTracker } from "@/components/SubjectsTracker";
 import { PrayerTracker } from "@/components/PrayerTracker";
 import { WorkoutTracker } from "@/components/WorkoutTracker";
 import { DailyAnalysis } from "@/components/DailyAnalysis";
+import { StreakCounter } from "@/components/StreakCounter";
 import { Button } from "@/components/ui/button";
 import { useProductivityStore } from "@/hooks/use-productivity-store";
 import { RotateCcw } from "lucide-react";
@@ -49,9 +50,10 @@ function Index() {
           </Button>
         </div>
 
-        {/* Live Clock */}
-        <div className="mb-6">
+        {/* Live Clock + Streak */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <LiveClock />
+          <StreakCounter currentStreak={store.streak.currentStreak} bestStreak={store.streak.bestStreak} />
         </div>
 
         {/* Analysis at top */}

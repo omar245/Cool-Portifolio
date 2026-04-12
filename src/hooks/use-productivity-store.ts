@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 const STORAGE_KEY = "daily-productivity-v1";
 const STREAK_KEY = "daily-productivity-streak";
+const HISTORY_KEY = "daily-productivity-history";
 
 export interface ProductivityState {
   checklist: Record<string, boolean>;
@@ -11,10 +12,19 @@ export interface ProductivityState {
   workoutNotes: string;
 }
 
+export interface DayHistory {
+  date: string;
+  percent: number;
+  checklistDone: number;
+  prayersDone: number;
+  subjectsFilled: number;
+  workoutDone: boolean;
+}
+
 interface StreakData {
   currentStreak: number;
   bestStreak: number;
-  lastCompletedDate: string | null; // YYYY-MM-DD
+  lastCompletedDate: string | null;
 }
 
 const defaultState: ProductivityState = {
@@ -75,7 +85,6 @@ function loadStreak(): StreakData {
     const raw = localStorage.getItem(STREAK_KEY);
     if (!raw) return defaultStreak;
     const data: StreakData = { ...defaultStreak, ...JSON.parse(raw) };
-    // If last completed date is older than yesterday, streak is broken
     if (data.lastCompletedDate && !isYesterday(data.lastCompletedDate) && data.lastCompletedDate !== getToday()) {
       return { ...data, currentStreak: 0 };
     }
@@ -85,14 +94,27 @@ function loadStreak(): StreakData {
   }
 }
 
+function loadHistory(): DayHistory[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
 export function useProductivityStore() {
   const [state, setState] = useState<ProductivityState>(defaultState);
   const [streak, setStreak] = useState<StreakData>(defaultStreak);
+  const [history, setHistory] = useState<DayHistory[]>([]);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setState(loadState());
     setStreak(loadStreak());
+    setHistory(loadHistory());
     setMounted(true);
   }, []);
 
@@ -136,6 +158,26 @@ export function useProductivityStore() {
     }
   }, [completionPercent, mounted, streak.lastCompletedDate]);
 
+  // Save today's progress to history
+  useEffect(() => {
+    if (!mounted) return;
+    const today = getToday();
+    const entry: DayHistory = {
+      date: today,
+      percent: completionPercent,
+      checklistDone,
+      prayersDone,
+      subjectsFilled,
+      workoutDone: state.workoutDone,
+    };
+    setHistory((prev) => {
+      const filtered = prev.filter((d) => d.date !== today);
+      const updated = [...filtered, entry].slice(-30);
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  }, [completionPercent, mounted, checklistDone, prayersDone, subjectsFilled, state.workoutDone]);
+
   const toggleChecklist = useCallback((key: string) => {
     setState((s) => ({
       ...s,
@@ -168,13 +210,13 @@ export function useProductivityStore() {
   const reset = useCallback(() => {
     setState(defaultState);
     localStorage.removeItem(STORAGE_KEY);
-    // Don't reset streak data — only daily state
   }, []);
 
   return {
     state,
     mounted,
     streak,
+    history,
     toggleChecklist,
     setSubject,
     togglePrayer,

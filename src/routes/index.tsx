@@ -9,7 +9,7 @@ import { DailyAnalysis } from "@/components/DailyAnalysis";
 import { StreakCounter } from "@/components/StreakCounter";
 import { Button } from "@/components/ui/button";
 import { useProductivityStore } from "@/hooks/use-productivity-store";
-import { RotateCcw, CalendarClock } from "lucide-react";
+import { RotateCcw, CalendarClock, BarChart3 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -43,6 +43,12 @@ function Index() {
               <Button variant="outline" size="sm" className="gap-1.5">
                 <CalendarClock className="h-3.5 w-3.5" />
                 Schedule
+              </Button>
+            </Link>
+            <Link to="/history">
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <BarChart3 className="h-3.5 w-3.5" />
+                History
               </Button>
             </Link>
             <Button

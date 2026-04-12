@@ -2,6 +2,16 @@ import { useState, useEffect, useCallback } from "react";
 
 const STORAGE_KEY = "daily-productivity-v1";
 const STREAK_KEY = "daily-productivity-streak";
+const HISTORY_KEY = "daily-productivity-history";
+
+export interface DayHistory {
+  date: string; // YYYY-MM-DD
+  percent: number;
+  checklistDone: number;
+  prayersDone: number;
+  subjectsFilled: number;
+  workoutDone: boolean;
+}
 
 export interface ProductivityState {
   checklist: Record<string, boolean>;

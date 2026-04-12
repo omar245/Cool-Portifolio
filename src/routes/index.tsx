@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { LiveClock } from "@/components/LiveClock";
 import { DailyChecklist } from "@/components/DailyChecklist";
 import { SubjectsTracker } from "@/components/SubjectsTracker";
@@ -8,7 +9,7 @@ import { DailyAnalysis } from "@/components/DailyAnalysis";
 import { StreakCounter } from "@/components/StreakCounter";
 import { Button } from "@/components/ui/button";
 import { useProductivityStore } from "@/hooks/use-productivity-store";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, CalendarClock } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,

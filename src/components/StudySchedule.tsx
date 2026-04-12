@@ -106,7 +106,6 @@ export function StudySchedule() {
                   <div className={`h-3 w-3 rounded-full transition-all duration-500 ${style.dot} ${
                     isActive ? "ring-4 ring-offset-2 ring-offset-background" : ""
                   }`}
-                  style={isActive ? { ringColor: style.dot } : undefined}
                   />
                   {isActive && (
                     <div className={`absolute h-3 w-3 rounded-full ${style.dot} animate-ping`} />

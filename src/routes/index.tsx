@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { LiveClock } from "@/components/LiveClock";
 import { DailyChecklist } from "@/components/DailyChecklist";
 import { SubjectsTracker } from "@/components/SubjectsTracker";
@@ -8,7 +9,7 @@ import { DailyAnalysis } from "@/components/DailyAnalysis";
 import { StreakCounter } from "@/components/StreakCounter";
 import { Button } from "@/components/ui/button";
 import { useProductivityStore } from "@/hooks/use-productivity-store";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, CalendarClock } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -37,17 +38,25 @@ function Index() {
             <h1 className="text-2xl md:text-3xl font-bold text-foreground">Daily Tracker</h1>
             <p className="text-sm text-muted-foreground">Stay consistent. Stay productive.</p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              if (window.confirm("Reset all data for today?")) store.reset();
-            }}
-            className="gap-1.5"
-          >
-            <RotateCcw className="h-3.5 w-3.5" />
-            Reset
-          </Button>
+          <div className="flex items-center gap-2">
+            <Link to="/schedule">
+              <Button variant="outline" size="sm" className="gap-1.5">
+                <CalendarClock className="h-3.5 w-3.5" />
+                Schedule
+              </Button>
+            </Link>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                if (window.confirm("Reset all data for today?")) store.reset();
+              }}
+              className="gap-1.5"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              Reset
+            </Button>
+          </div>
         </div>
 
         {/* Live Clock + Streak */}

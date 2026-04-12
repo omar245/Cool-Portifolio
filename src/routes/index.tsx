@@ -50,9 +50,10 @@ function Index() {
           </Button>
         </div>
 
-        {/* Live Clock */}
-        <div className="mb-6">
+        {/* Live Clock + Streak */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <LiveClock />
+          <StreakCounter currentStreak={store.streak.currentStreak} bestStreak={store.streak.bestStreak} />
         </div>
 
         {/* Analysis at top */}

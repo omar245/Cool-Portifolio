@@ -100,9 +100,16 @@ export function useProductivityStore() {
   const [streak, setStreak] = useState<StreakData>(defaultStreak);
   const [mounted, setMounted] = useState(false);
 
+  const [history, setHistory] = useState<DayHistory[]>([]);
+
   useEffect(() => {
     setState(loadState());
     setStreak(loadStreak());
+    // Load history
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      if (raw) setHistory(JSON.parse(raw));
+    } catch { /* ignore */ }
     setMounted(true);
   }, []);
 

@@ -5,6 +5,7 @@ import { SubjectsTracker } from "@/components/SubjectsTracker";
 import { PrayerTracker } from "@/components/PrayerTracker";
 import { WorkoutTracker } from "@/components/WorkoutTracker";
 import { DailyAnalysis } from "@/components/DailyAnalysis";
+import { StreakCounter } from "@/components/StreakCounter";
 import { Button } from "@/components/ui/button";
 import { useProductivityStore } from "@/hooks/use-productivity-store";
 import { RotateCcw } from "lucide-react";

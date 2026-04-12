@@ -9,7 +9,7 @@ import { DailyAnalysis } from "@/components/DailyAnalysis";
 import { StreakCounter } from "@/components/StreakCounter";
 import { Button } from "@/components/ui/button";
 import { useProductivityStore } from "@/hooks/use-productivity-store";
-import { RotateCcw, CalendarClock } from "lucide-react";
+import { RotateCcw, CalendarClock, BarChart3 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
